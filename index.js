@@ -6,11 +6,12 @@ const searchBtn = document.getElementById('search-btn');
 const searchResults = document.querySelector('.search-results');
 const showMore = document.getElementById('show-more-btn');
 
-let inputData = "";
+let inputData = "hello";
 let page = 1;
 
+fetchImages();
+
 async function fetchImages(){
-    
     inputData = searchInput.value;
     const url = `https://api.unsplash.com/search/photos?page=${page}&query=${inputData}&client_id=${apiKey}`;
     try {
@@ -32,16 +33,24 @@ async function fetchImages(){
     }
 }
 
+function clearImages() {
+    const resultsContainer = document.querySelector('.search-results');
+    while (resultsContainer.firstChild) {
+        resultsContainer.removeChild(resultsContainer.firstChild);
+    }
+}
+
 fetchForm.addEventListener('submit', (event) => {
     event.preventDefault();
     page = 1;
+    clearImages();
     fetchImages()
 } )
 showMore.addEventListener('click', () => {
     fetchImages()
 } )
 
-const clearImg = ((inputData) => inputData="");
+
 
 function displayImg(results){
     results.map(result => {
